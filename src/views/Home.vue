@@ -2,16 +2,39 @@
   <div class="h-screen flex flex-col items-center">
     <Header />
     <div class="mt-4 px-2 w-full flex flex-col items-center justify-center">
-      <input
-        type="text"
-        role="search"
-        id="searcher"
-        name="searcher"
-        v-model="search"
-        @input="getBooks"
-        placeholder="What book do you want to look for today?"
-        class="ring ring-primary-500 ring-opacity-50 rounded text-md p-1 w-11/12 sm:w-9/12 md:w-7/12 text-gray-700 focus:outline-none hover:shadow-xl focus:shadow-xl transition duration-500 ease-in-out"
-      />
+      <form
+        action="get"
+        class="flex flex-row items-center justify-center ring ring-primary-500 ring-opacity-50 rounded text-md p-1 w-11/12 sm:w-9/12 md:w-7/12 text-gray-700 focus:outline-none hover:shadow-xl focus:shadow-xl transition duration-500 ease-in-out"
+        v-on:submit="
+          (e) => {
+            e.preventDefault();
+            getBooks();
+          }
+        "
+      >
+        <input
+          type="text"
+          role="search"
+          id="searcher"
+          name="searcher"
+          v-model="search"
+          placeholder="What book do you want to look for today?"
+          class="w-full focus:outline-none"
+        />
+        <button type="submit" class="w-6 h-6 text-gray-600">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 20 20"
+            fill="currentColor"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z"
+              clip-rule="evenodd"
+            />
+          </svg>
+        </button>
+      </form>
       <div
         class="grid gap-2 md:grid-cols-2 lg:grid-cols-4 lg:px-4 md:gap-4 w-full mt-4"
         v-if="(Object.keys(books).length === 0) === false"
@@ -19,19 +42,8 @@
         <div
           v-for="book in books"
           v-bind:key="book.id + book.etag"
-          class="hover:shadow-xl bg-gray-50 p-2 transition duration-500 ease-in-out"
+          class="hover:shadow-xl bg-gray-50 p-2 h-auto transition duration-500 ease-in-out"
         >
-          <div class="flex items-center justify-center">
-            <img
-              :src="
-                book.volumeInfo.imageLinks.thumbnail.replace(
-                  'http://',
-                  'https://'
-                )
-              "
-              :alt="book.volumeInfo.title"
-            />
-          </div>
           <h1 class="text-center font-medium text-lg">
             {{ book.volumeInfo.title }}
           </h1>
@@ -44,7 +56,16 @@
             >
           </div>
           <p
-            class="max-h-16 overflow-hidden text-justify"
+            class="overflow-hidden text-justify"
+            style="
+               {
+                overflow: hidden;
+                text-overflow: ellipsis;
+                display: -webkit-box;
+                -webkit-line-clamp: 4;
+                -webkit-box-orient: vertical;
+              }
+            "
             v-if="book.volumeInfo.description"
           >
             {{ book.volumeInfo.description }}
