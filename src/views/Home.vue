@@ -23,7 +23,12 @@
         >
           <div class="flex items-center justify-center">
             <img
-              :src="book.volumeInfo.imageLinks.thumbnail"
+              :src="
+                book.volumeInfo.imageLinks.thumbnail.replace(
+                  'http://',
+                  'https://'
+                )
+              "
               :alt="book.volumeInfo.title"
             />
           </div>
