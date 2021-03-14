@@ -1,6 +1,6 @@
 <template>
   <header
-    class="flex flex-wrap px-4 sm:px-6 py-2 mb-1 bg-primary-500 text-gray-100 shadow-xl w-full"
+    class="flex flex-wrap px-4 sm:px-6 lg:px-7 lg:py-3 py-2 mb-1 bg-primary-500 text-gray-100 shadow-xl w-full"
   >
     <h1 class="font-medium text-md">Books searcher</h1>
   </header>
